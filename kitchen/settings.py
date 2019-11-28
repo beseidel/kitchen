@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'kitchen.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'kitchen',
+        'NAME': 'kitchenTable',
         'USER': 'root',
         'PASSWORD': 'rootroot',
         'HOST': 'database-1.c3jxk3dtpywx.us-east-2.rds.amazonaws.com',
