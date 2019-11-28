@@ -33,8 +33,8 @@ class Kitchen(models.Model):
 
 class WorkingDay(models.Model):
    day = models.CharField(max_length=15, null=False, default='NA')
-   start_time = models.TimeField(null=False) 
-   start_time = models.TimeField(null=False)
+   start_time = models.CharField(max_length=10, null=False, default='NA') 
+   end_time = models.CharField(max_length=10, null=False, default='NA') 
 
    kitchen = models.ForeignKey(Kitchen, on_delete=models.CASCADE)
 
