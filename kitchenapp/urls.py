@@ -14,5 +14,8 @@ urlpatterns = [
 
     # Buyer Path
     path('buyer/', Index.as_view()),    # Subject to change 
+    
+
+
 
 ]
