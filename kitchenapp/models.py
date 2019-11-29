@@ -1,5 +1,4 @@
 from django.db import models
-
 # Create your models here.
 
 
@@ -26,10 +25,9 @@ class Buyer(models.Model):
 
 class Kitchen(models.Model):
    kitchen_name = models.CharField(max_length=50, null=False, default="NA")
-   # working_days = []
+   #working_days = []
    image_url = models.CharField(max_length=200)
-
-   provider = models.ForeignKey(Provider, on_delete=models.CASCADE)
+   provider = models.ForeignKey(Provider, on_delete=models.CASCADE, null=False)
 
 class WorkingDay(models.Model):
    day = models.CharField(max_length=15, null=False, default='NA')
@@ -43,6 +41,6 @@ class Menu(models.Model):
    price =  models.DecimalField(max_digits=4, decimal_places=2, null=False)
    is_vegan = models.BooleanField(default=False)
 
-   kitchen = models.ForeignKey(Kitchen, on_delete=models.CASCADE)
+   kitchen = models.ForeignKey(Kitchen, on_delete=models.CASCADE, null=False)
 
 
