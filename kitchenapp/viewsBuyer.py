@@ -7,6 +7,11 @@ from django.views import View
 from django.views.generic import ListView, DetailView
 from rest_framework.views import APIView
 # models
-from .models import Provider, Buyer, Kitchen, WorkingDay, Menu
+from .models import User, Kitchen, WorkingDay, Menu
+
+
+
+
+
 
 

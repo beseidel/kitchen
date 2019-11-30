@@ -7,13 +7,24 @@ from django.views import View
 from django.views.generic import ListView, DetailView
 from rest_framework.views import APIView
 # models
-from .models import Provider, Buyer, Kitchen, WorkingDay, Menu
+from .models import User, Kitchen, WorkingDay, Menu
 
+from .forms import UserForm, LoginForm
 
 
 class Index(View):
+   
    def get(self, request):
-      return HttpResponse("Added")
+      form = LoginForm()
+      return render(request, 'forms.html', {'form':form})
+      
+   def post(self, request):
+      form = LoginForm(request.POST)      
+      form.save()
+      # form.setProviderTrue()
+      print("OOKOOKOKOKOKOKOKO")
+
+      return HttpResponse("mnoneaef")
 
 class Signup(View):
    def get(self, request):
