@@ -1,6 +1,8 @@
 from django import forms 
-from .models import  User, Menu
+from .models import  User, Menu, Kitchen
 
+
+# kitchen = forms.mode(widget = forms.HiddenInput(), required = False)
 
 class UserForm(forms.ModelForm):   
    username  = forms.CharField(max_length=100, required = True)
@@ -35,18 +37,25 @@ class LoginForm(forms.ModelForm):
    
    username  = forms.CharField(max_length=100, required = True, initial="What is your favorite place to live?")
    password = forms.CharField(max_length=32, widget=forms.PasswordInput)
-   paper = UserChoiceField(queryset=User.objects.all(), initial=0)
    
-   # def __init__(self, *args, **kwargs):
-   #      super(LoginForm, self).__init__(*args, **kwargs)
-   #      self.fields['paper'].label_from_instance = lambda obj: "%s" % obj.username
+   
    
 
 class MenuForm(forms.ModelForm):
-   dish_name  = forms.CharField(max_length=100)
-   price = forms.DecimalField(max_digits=4, decimal_places=2)
-   paper = forms.CharField(widget = forms.HiddenInput(), required = False)
+   
    class Meta:
       model = Menu
       fields =('dish_name', 'price')
 
+   class KitchenChoiceField(forms.ModelChoiceField):
+      def label_from_instance(self, obj):
+         return obj.kitchen_name
+
+   dish_name  = forms.CharField(max_length=100, required=True)
+   price = forms.DecimalField(max_digits=4, decimal_places=2, required=True)
+   kitchen = forms.ModelChoiceField(queryset=Kitchen.objects.all(), initial=0, required=True)
+
+   
+   def __init__(self, *args, **kwargs):
+        super(MenuForm, self).__init__(*args, **kwargs)
+        self.fields['kitchen'].label_from_instance = lambda obj: "%s" % obj.kitchen_name

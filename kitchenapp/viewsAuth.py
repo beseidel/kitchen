@@ -9,17 +9,17 @@ from rest_framework.views import APIView
 # models
 from .models import User, Kitchen, WorkingDay, Menu
 
-from .forms import UserForm, LoginForm
+from .forms import UserForm, LoginForm, MenuForm
 
 
 class Index(View):
    
    def get(self, request):
-      form = LoginForm()
+      form = MenuForm()
       return render(request, 'forms.html', {'form':form})
       
    def post(self, request):
-      form = LoginForm(request.POST)      
+      form = MenuForm(request.POST)      
       form.save()
       # form.setProviderTrue()
       print("OOKOOKOKOKOKOKOKO")
