@@ -3,21 +3,15 @@ from .models import  User, Menu, Kitchen
 
 
 # kitchen = forms.mode(widget = forms.HiddenInput(), required = False)
-
-
-class UserForm(forms.ModelForm):   
-   username  = forms.CharField(max_length=100, required = True)
-   first_name = forms.CharField(max_length=100, required = True)
-   last_name = forms.CharField(max_length=100, required = True)
-   password = forms.CharField(max_length=32, widget=forms.PasswordInput, required = True)
+class SignUpForm(forms.ModelForm):   
    question_1 = forms.CharField(max_length=100, required = True, initial="What is your favorite color?")
-   answer_1 = forms.CharField(max_length=100, required = True)
+   answer_1 = forms.CharField(required = True)
    question_2 = forms.CharField(max_length=100, required = True, initial="What is your favorite place to live?")
-   answer_2 = forms.CharField(max_length=100, required = True)
-   is_provider = forms.BooleanField()
+   answer_2 = forms.CharField(required = True)
+   is_provider = forms.BooleanField(required=False)
    class Meta:
       model = User
-      fields = ('username', 'first_name', 'last_name', 'password', 'question_1',  'answer_1', 'question_2','answer_2', 'is_provider')
+      fields = "__all__"
 
    def __init__(self, *args, **kwargs):
       super(UserForm, self).__init__(*args, **kwargs) 
@@ -38,25 +32,36 @@ class LoginForm(forms.ModelForm):
    password = forms.CharField(max_length=32, widget=forms.PasswordInput)
    
    
-   
 
 class AddDishForm(forms.ModelForm):
    
    class Meta:
       model = Menu
-      fields =('dish_name', 'price', 'kitchen')
+      fields = "__all__"
 
    class KitchenChoiceField(forms.ModelChoiceField):
       def label_from_instance(self, obj):
          return obj.kitchen_name
 
-   dish_name  = forms.CharField(max_length=100, required=True)
-   price = forms.DecimalField(max_digits=4, decimal_places=2, required=True)
-   kitchen = forms.ModelChoiceField(queryset=Kitchen.objects.all(), initial=0, required=True)
-
    def __init__(self, *args, **kwargs):
-        super(AddDishForm, self).__init__(*args, **kwargs)
-        self.fields['kitchen'].label_from_instance = lambda obj: "%s" % obj.kitchen_name
+      super(AddDishForm, self).__init__(*args, **kwargs)
+      self.fields['kitchen']=forms.ModelChoiceField(queryset=Kitchen.objects.all(), required=True)
+      self.fields['kitchen'].label_from_instance = lambda obj: "%s" % obj.kitchen_name
+      self.fields['is_vegan'] =  forms.BooleanField(required=False)
+
+   # @classmethod
+   #  def create(cls):
+   #      book = cls(price=678)
+   #      return book
+   # def setNew(self):
+   #    dish = super(AddDishForm, self).save(commit=False)
+   #    dish.price = 789
+   #    dish.save()
+
+      
+
+   
+
 
 class AddKitchenForm(forms.ModelForm):
    class Meta:

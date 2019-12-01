@@ -33,10 +33,9 @@ class WorkingDay(models.Model):
    kitchen = models.ForeignKey(Kitchen, on_delete=models.CASCADE)
 
 class Menu(models.Model):
-   dish_name = models.CharField(max_length=50, null=False, default='N/A')
+   dish_name = models.CharField(max_length=50, null=False, default='NA')
    price =  models.DecimalField(max_digits=4, decimal_places=2, null=False)
    is_vegan = models.BooleanField(default=False)
-
    kitchen = models.ForeignKey(Kitchen, on_delete=models.CASCADE, null=False)
 
 
