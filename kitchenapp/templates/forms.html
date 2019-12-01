@@ -4,7 +4,7 @@
 
    <body>
       
-      <form method="post" novalidate>
+      <form method="post" novalidate enctype="multipart/form-data">
          {% csrf_token %}
          <table stlye="border: 3px solid black;">
             {{ form.as_table  }}

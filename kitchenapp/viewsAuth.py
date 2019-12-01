@@ -9,27 +9,33 @@ from rest_framework.views import APIView
 # models
 from .models import User, Kitchen, WorkingDay, Menu
 
-from .forms import SignUpForm, LoginForm, AddDishForm
+from .forms import SignUpForm, LoginForm, AddDishForm, AddKitchenForm
 
 
 class Index(View):
    
    def get(self, request):
-      form = AddDishForm()
+      form = AddKitchenForm()
       return render(request, 'forms.html', {'form':form})
       
    def post(self, request):
-      form = AddDishForm(request.POST)
+      form = AddKitchenForm(request.POST, request.FILES)
+      # print(request.FILES)
+      # print(request.POST)
       
       if form.is_valid():
-         form.save()         
+         form.save()
+         print(form.cleaned_data['name'])
+         print(form.cleaned_data['image'])
+
          return HttpResponse("Added")   
       return HttpResponse("Not added")
 
 class Signup(View):
    def get(self, request):
-      form = SignupForm()
+      form = SignUpForm()
       return render(request, 'forms.html', {'form':form})
+   
    def post(self, request):
       pass
 
