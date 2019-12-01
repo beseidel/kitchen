@@ -4,6 +4,7 @@ from .models import  User, Menu, Kitchen
 
 # kitchen = forms.mode(widget = forms.HiddenInput(), required = False)
 
+
 class UserForm(forms.ModelForm):   
    username  = forms.CharField(max_length=100, required = True)
    first_name = forms.CharField(max_length=100, required = True)
@@ -19,11 +20,9 @@ class UserForm(forms.ModelForm):
       fields = ('username', 'first_name', 'last_name', 'password', 'question_1',  'answer_1', 'question_2','answer_2', 'is_provider')
 
    def __init__(self, *args, **kwargs):
-      super(UserForm, self).__init__(*args, **kwargs) # Call to ModelForm constructor
+      super(UserForm, self).__init__(*args, **kwargs) 
       self.fields['question_1'].widget.attrs['style'] = 'width:300px;'
       self.fields['question_2'].widget.attrs['style'] = 'width:300px;'
-
-
 
 
 class LoginForm(forms.ModelForm):
@@ -41,11 +40,11 @@ class LoginForm(forms.ModelForm):
    
    
 
-class MenuForm(forms.ModelForm):
+class AddDishForm(forms.ModelForm):
    
    class Meta:
       model = Menu
-      fields =('dish_name', 'price')
+      fields =('dish_name', 'price', 'kitchen')
 
    class KitchenChoiceField(forms.ModelChoiceField):
       def label_from_instance(self, obj):
@@ -55,7 +54,14 @@ class MenuForm(forms.ModelForm):
    price = forms.DecimalField(max_digits=4, decimal_places=2, required=True)
    kitchen = forms.ModelChoiceField(queryset=Kitchen.objects.all(), initial=0, required=True)
 
-   
    def __init__(self, *args, **kwargs):
-        super(MenuForm, self).__init__(*args, **kwargs)
+        super(AddDishForm, self).__init__(*args, **kwargs)
         self.fields['kitchen'].label_from_instance = lambda obj: "%s" % obj.kitchen_name
+
+class AddKitchenForm(forms.ModelForm):
+   class Meta:
+      model = Kitchen
+      fields = ('kitchen_name',)
+   kitchen_name = forms.CharField(max_length=50, required=True)
+   image = forms.FileField(required=True)
+
