@@ -11,12 +11,13 @@ from .models import User, Kitchen, WorkingDay, Menu
 
 from .forms import SignUpForm, LoginForm, AddDishForm, AddKitchenForm
 from .session import Session
-from .authenticate import login_required, authenticate_user
+from .authenticate import login_required, authenticate_user, seller_required
 class Index(View):
    
    def get(self, request):
       form = AddKitchenForm()
-      return render(request, 'forms.html', {'form':form})
+      # return render(request, 'forms.html', {'form':form})
+      return render(request, 'kitchen.html', {'form':form})
       
    def post(self, request):
       #form = AddKitchenForm(request.POST, request.FILES)
@@ -44,14 +45,11 @@ class Signup(View):
       return render(request, 'forms.html', {'form':form})
    
    def post(self, request):
-      
       form = SignUpForm(request.POST)
       if form.is_valid():
          form.save()
          
       return HttpResponse('Successfully Signed Up')
-
-
 
 class Login(View):
 
@@ -66,18 +64,30 @@ class Login(View):
          username = form.cleaned_data['username']
          password = form.cleaned_data['password']
          if authenticate_user(request, username, password):
-            print('======> ' ,authenticate_user(request, username, password))
             return HttpResponse('Logged in')
          
-
       return HttpResponseRedirect(reverse('kitchen:login'))
 
-
-
 class Logout(View):
-   def post(self, request):
+   
+   @login_required
+   def get(self, request):
+      session = Session(request)
+      session.removeAll()   
+      return HttpResponseRedirect(reverse('kitchen:login')) 
+
+
+class GetKitchen(View):
+   
+   def get(self, request):
       pass
 
+class AddKitchen(View):
+   @login_required
+   @seller_required
+   def get(self, request):
+      return HttpResponse("YAYYY you are a seller")
 
 
-
+   def post(self, request):
+      pass

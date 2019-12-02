@@ -1,12 +1,12 @@
 from django.urls import path, include
 from django.conf.urls import url
 
-from .viewsAuth import Index, Signup, Login, Logout
+from .viewsAuth import Index, Signup, Login, Logout, AddKitchen
 from .viewsProvider import MenuView, KitchenView
 from .viewsBuyer import *
 
 app_name='kitchen'
-app_name='kitchen'
+
 urlpatterns = [
     #User Authentication
     path('', Index.as_view()),
@@ -17,7 +17,7 @@ urlpatterns = [
     # Provider Path
     url(r'^kitchen/(?P<provider_key>.*)/$', KitchenView.as_view()), # Subject to change 
     url(r'^menu/(?P<kitchen_key>.*)/$', MenuView.as_view()), # Subject to change 
-    
+    url(r'^addKitchen/$', AddKitchen.as_view()), # Subject to change 
 
     # Buyer Path
     path('buyer/', Index.as_view()),    # Subject to change 
