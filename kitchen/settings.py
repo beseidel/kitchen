@@ -128,7 +128,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
@@ -144,3 +143,14 @@ STATICFILES_DIRS = [
     '/mnt/c/Users/Kevin Lin/Desktop/kitchen/kitchenapp/static'
     
 ]
+
+##########################################
+
+AWS_ACCESS_KEY_ID = 'AKIAJOXX6WYXL6SGEPDA'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'kitchenfeast'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'static'
