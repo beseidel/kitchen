@@ -1,5 +1,5 @@
 from django import forms 
-from .models import  User, Menu, Kitchen, KitchenImage
+from .models import  User, Menu, Kitchen, KitchenImage, Kitchen
 
 
 # kitchen = forms.mode(widget = forms.HiddenInput(), required = False)
@@ -12,7 +12,7 @@ class SignUpForm(forms.ModelForm):
       model = User
       fields = "__all__"
       labels = {
-        "is_provider": "Become seller"
+        "is_provider": "Become a seller"
       }
 
    def __init__(self, *args, **kwargs):
@@ -23,17 +23,10 @@ class SignUpForm(forms.ModelForm):
       fields['is_provider'].required = False
 
 
-class LoginForm(forms.ModelForm):
-   class Meta:
-      model = User
-      fields = ('username','password')
 
-   class UserChoiceField(forms.ModelChoiceField):
-      def label_from_instance(self, obj):
-         return obj.username
-   
-   username  = forms.CharField(max_length=100, required = True, initial="What is your favorite place to live?")
-   password = forms.CharField(max_length=32, widget=forms.PasswordInput)
+class LoginForm(forms.Form):
+   username  = forms.CharField(max_length=100, required = True)
+   password = forms.CharField(max_length=32, widget=forms.PasswordInput, required=True)
    
    
 
@@ -58,20 +51,15 @@ class AddDishForm(forms.ModelForm):
 
 class AddKitchenForm(forms.ModelForm):
    class Meta:
-      model = KitchenImage
-      fields = '__all__'
-   # kitchen_name = forms.CharField(max_length=50, required=True)
+      model = Kitchen
+      fields =('kitchen_name', )
+   image  = forms.ImageField()
    
    def __init__(self, *args, **kwargs):
       super(AddKitchenForm, self).__init__(*args, **kwargs)
       self.fields['image'].required = True
-      self.fields['name'].required = True
-
-
-
-
-
-
+      self.fields['kitchen_name'].required = True
+      
 
 
 

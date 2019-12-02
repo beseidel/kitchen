@@ -10,8 +10,8 @@ from rest_framework.views import APIView
 from .models import User, Kitchen, WorkingDay, Menu
 
 from .forms import SignUpForm, LoginForm, AddDishForm, AddKitchenForm
-
-
+from .session import Session
+from .authenticate import login_required, authenticate_user
 class Index(View):
    
    def get(self, request):
@@ -44,17 +44,33 @@ class Signup(View):
       return render(request, 'forms.html', {'form':form})
    
    def post(self, request):
-      pass
+      
+      form = SignUpForm(request.POST)
+      if form.is_valid():
+         form.save()
+         
+      return HttpResponse('Successfully Signed Up')
+
 
 
 class Login(View):
 
    def get(self, request):
-      pass
+      form = LoginForm()
+      return render(request, 'forms.html', {'form': form})
 
    def post(self, request):
-      pass
+      form = LoginForm(request.POST)
 
+      if form.is_valid():
+         username = form.cleaned_data['username']
+         password = form.cleaned_data['password']
+         if authenticate_user(request, username, password):
+            print('======> ' ,authenticate_user(request, username, password))
+            return HttpResponse('Logged in')
+         
+
+      return HttpResponseRedirect(reverse('kitchen:login'))
 
 
 
