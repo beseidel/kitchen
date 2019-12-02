@@ -31,6 +31,3 @@ def authenticate_user(request, username, password):
       request.session['user'] = (username, password, userObj.is_provider)
       return True
    return False
-
-
-

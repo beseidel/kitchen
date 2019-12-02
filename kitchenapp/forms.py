@@ -49,6 +49,7 @@ class AddDishForm(forms.ModelForm):
       fields['is_vegan'].required=False
 
 
+'''
 class AddKitchenForm(forms.ModelForm):
    class Meta:
       model = Kitchen
@@ -59,7 +60,14 @@ class AddKitchenForm(forms.ModelForm):
       super(AddKitchenForm, self).__init__(*args, **kwargs)
       self.fields['image'].required = True
       self.fields['kitchen_name'].required = True
-      
+'''
+
+
+class AddKitchenForm(forms.Form):
+   kitchen_name = forms.CharField(max_length=50, required=True)
+   image = forms.ImageField(required=True)
+
+
 
 
 
