@@ -1,4 +1,4 @@
-from .models import User, Kitchen
+from .models import User, Kitchen, Menu
 
 
 class KitchenSession(object):
@@ -19,6 +19,9 @@ class KitchenSession(object):
    
    def getKitchenObject(self, kitchen_id):
       return Kitchen.objects.get(id=kitchen_id)
+
+   def getDishObject(self, dish_id):
+      return Menu.objects.get(id=dish_id)
 
    def add(self, key, value):
       self.session[key] = value

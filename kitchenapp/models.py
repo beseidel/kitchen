@@ -39,7 +39,6 @@ class Menu(models.Model):
    kitchen = models.ForeignKey(Kitchen, on_delete=models.CASCADE, null=False)
 
 
-
 class KitchenImage(models.Model):
    name = models.CharField(max_length=100, null = False, default='NA')
    image= models.ImageField(upload_to='images/')
@@ -48,3 +47,5 @@ class KitchenImage(models.Model):
 class Cart(models.Model):
    user = models.ForeignKey(User, null=False, on_delete=models.CASCADE)
    dish = models.ForeignKey(Menu, null=False, on_delete=models.CASCADE)
+   purchased = models.BooleanField(default=False)
+   

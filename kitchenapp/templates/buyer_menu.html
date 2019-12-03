@@ -90,7 +90,7 @@
             dataType:"json",
             data: JSON.stringify({'dish_id': id }),
             success: function (data){
-                      
+              window.location=   '{% url "kitchen:shoppingCart" %}'
             },
             error: function(err){
             }

@@ -7,7 +7,7 @@ from django.views import View
 from django.views.generic import ListView, DetailView
 from rest_framework.views import APIView
 # models
-from .models import User, Kitchen, WorkingDay, Menu
+from .models import User, Kitchen, WorkingDay, Menu, Cart
 from .forms import SignUpForm, LoginForm, AddDishForm, AddKitchenForm
 from .session import KitchenSession
 from .authenticate import login_required, authenticate_user, seller_required, addToBucket
@@ -21,6 +21,16 @@ class AllKitchenView(ListView):
    queryset = Kitchen.objects.all()
    context_object_name='kitchens'
    template_name='buyer_kitchen.html'
+
+
+class CartView(ListView):
+   
+   @login_required
+   def get(self, request):
+      kitchen_session = KitchenSession(request)
+      cart = Cart.objects.filter(user=KitchenSession(request).getUserObject() )
+      return render(request, 'cart.html', {'cart':cart})
+      
 
 
 class MenuView(View):
@@ -39,5 +49,8 @@ class AddToCart(APIView):
          form = serializer.data
          dish_id = form['dish_id']
          print(dish_id)
+         kitchen_session = KitchenSession(request)
+         Cart.objects.create(user=kitchen_session.getUserObject(), dish=kitchen_session.getDishObject(dish_id))
          return Response({'status': "OK"})
+         
       return Response({'status': "error"})
