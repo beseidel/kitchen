@@ -18,8 +18,12 @@ class SignUpForm(forms.ModelForm):
    def __init__(self, *args, **kwargs):
       super(SignUpForm, self).__init__(*args, **kwargs) 
       fields = self.fields
-      fields['question_1'].widget.attrs['style'] = 'width:300px;'
+      fields['question_1'].widget.attrs['style'] = 'width:250px;'
       fields['question_2'].widget.attrs['style'] = 'width:300px;'
+      fields['question_1'].widget.attrs['class'] = "w3-bar-item w3-button"
+      fields['question_2'].widget.attrs['class'] = "w3-bar-item w3-button"
+      fields['question_1'].widget.attrs['readonly'] = True
+      fields['question_2'].widget.attrs['readonly'] = True
       fields['is_provider'].required = False
 
 
