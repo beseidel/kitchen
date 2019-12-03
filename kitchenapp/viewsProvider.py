@@ -39,11 +39,6 @@ class AddKitchen(View):
       return HttpResponseRedirect(reverse('kitchen:addKitchen')) 
 
 
-
-
-
-
-
 class ProviderKitchenView(View):
    @login_required
    @seller_required
