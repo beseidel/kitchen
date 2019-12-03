@@ -33,6 +33,18 @@ class LoginForm(forms.Form):
    
    
 
+class AddDishForm(forms.Form):
+   dish_name = forms.CharField(max_length=50, required=True)
+   price =  forms.DecimalField(max_digits=10, decimal_places=2, required=True)
+   is_vegan = forms.BooleanField(required=False)
+
+
+
+class AddKitchenForm(forms.Form):
+   kitchen_name = forms.CharField(max_length=50, required=True)
+   image = forms.ImageField(required=True)
+
+'''
 class AddDishForm(forms.ModelForm):
    
    class Meta:
@@ -50,9 +62,4 @@ class AddDishForm(forms.ModelForm):
       fields['kitchen'].widget.attrs['style'] = 'width:100px;'
       fields['kitchen'].label_from_instance = lambda obj: "%s" % obj.kitchen_name
       fields['is_vegan'].required=False
-
-
-
-class AddKitchenForm(forms.Form):
-   kitchen_name = forms.CharField(max_length=50, required=True)
-   image = forms.ImageField(required=True)
+'''

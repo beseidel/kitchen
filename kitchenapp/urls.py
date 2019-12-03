@@ -2,7 +2,7 @@ from django.urls import path, include
 from django.conf.urls import url
 
 from .viewsAuth import Signup, Login, Logout
-from .viewsProvider import AddKitchen, ProviderKitchenView
+from .viewsProvider import AddKitchen, ProviderKitchenView, AddDish
 from .viewsBuyer import AllKitchenView, MenuView
 
 app_name='kitchen'
@@ -17,7 +17,7 @@ urlpatterns = [
     # Provider Path   
     url(r'^addKitchen/$', AddKitchen.as_view(), name='addKitchen'), # Subject to change 
     url(r'^providerKitchenView/$', ProviderKitchenView.as_view(), name='providerKitchenView'), # Subject to change 
-    url(r'^menu/kitchen/(?P<kitchen_id>.*)/$', AddKitchen.as_view(), name='addKitchen'), # Subject to change 
+    url(r'^menu/kitchen/(?P<kitchen_id>.*)/$', AddDish.as_view(), name='addDish'), # Subject to change 
     
     
     # Buyer Path
