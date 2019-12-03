@@ -8,36 +8,10 @@ from django.views.generic import ListView, DetailView
 from rest_framework.views import APIView
 # models
 from .models import User, Kitchen, WorkingDay, Menu
-
 from .forms import SignUpForm, LoginForm, AddDishForm, AddKitchenForm
-from .session import Session
-from .authenticate import login_required, authenticate_user, seller_required
-class Index(View):
-   
-   def get(self, request):
-      form = AddKitchenForm()
-      # return render(request, 'forms.html', {'form':form})
-      return render(request, 'kitchen.html', {'form':form})
-      
-   def post(self, request):
-      #form = AddKitchenForm(request.POST, request.FILES)
-      # print(request.FILES)
-      # print(request.POST)
-      
-      # if form.is_valid():
-      #    form.save()
-      #    print(form.cleaned_data['name'])
-      #    print(form.cleaned_data['image'])
-
-      import boto3
-      session = boto3.session.Session(aws_access_key_id='AKIAJOXX6WYXL6SGEPDA',
-                                    aws_secret_access_key='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')
-      s3 = session.resource('s3')
-      s3.Bucket('kitchenfeast').put_object(Key='jusitn kke.jpg', Body=request.FILES.get('image'), ACL='public-read')
-      
-      
-      
-      return HttpResponse("Not added")
+from .session import KitchenSession
+from .authenticate import login_required, authenticate_user, seller_required, addToBucket
+import boto3
 
 class Signup(View):
    def get(self, request):
@@ -48,8 +22,9 @@ class Signup(View):
       form = SignUpForm(request.POST)
       if form.is_valid():
          form.save()
+         return HttpResponseRedirect(reverse('kitchen:login'))
          
-      return HttpResponse('Successfully Signed Up')
+      return HttpResponseRedirect(reverse('kitchen:signup'))
 
 class Login(View):
 
@@ -72,36 +47,18 @@ class Logout(View):
    
    @login_required
    def get(self, request):
-      session = Session(request)
-      session.removeAll()   
+      kitchen_session = KitchenSession(request)
+      kitchen_session.removeAll()   
       return HttpResponseRedirect(reverse('kitchen:login')) 
 
 
-class GetKitchen(View):
-   
-   def get(self, request):
-      pass
 
-class AddKitchen(View):
-   
-   @login_required
-   @seller_required
-   def get(self, request):
-      form = AddKitchenForm()
-      return render(request, 'forms.html', {'form': form})
-
-
-   def post(self, request):
-      import boto3
-      # print('---------->> ',request.FILES.get('image').content_type)
-      file = request.FILES.get('image').name
-      fileExtension = file.split(".")[1].lower()
+'''
+      print('---------->> ',request.FILES.get('image').content_type)
+      kitchen_name = request.POST.get('kitchen_name')
+      file = request.FILES.get('image')
+      filename = file.name
+      fileExtension = '.' + filename.split(".")[1].lower()
       print(fileExtension)
-
-
-
-         # session = boto3.session.Session(aws_access_key_id='AKIAJOXX6WYXL6SGEPDA', aws_secret_access_key='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')
-         # s3 = session.resource('s3')
-         # s3.Bucket('kitchenfeast').put_object(Key='jusitn kke.jpg', Body=request.FILES.get('image'), ACL='public-read')
-
-      return HttpResponse('Added')
+      print(kitchen_name)
+'''

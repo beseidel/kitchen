@@ -1,8 +1,8 @@
 
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import User
+from .models import User, Kitchen
 from django.urls import reverse
-
+import boto3
 
 def login_required(function):
    def wrapper(*args, **kwargs):
@@ -31,3 +31,17 @@ def authenticate_user(request, username, password):
       request.session['user'] = (username, password, userObj.is_provider)
       return True
    return False
+
+def addToBucket(kitchen_name, file):
+      filename = file.name
+      fileExtension = '.' + filename.split(".")[1].lower()
+      key = str(kitchen_name + fileExtension)
+
+      session = boto3.session.Session(aws_access_key_id='AKIAJOXX6WYXL6SGEPDA', aws_secret_access_key='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')
+      s3 = session.resource('s3')
+      s3.Bucket('kitchenfeast').put_object(Key=key, Body=file, ACL='public-read')
+
+      return key
+      
+
+

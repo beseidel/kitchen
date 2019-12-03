@@ -8,10 +8,28 @@ from django.views.generic import ListView, DetailView
 from rest_framework.views import APIView
 # models
 from .models import User, Kitchen, WorkingDay, Menu
+from .forms import SignUpForm, LoginForm, AddDishForm, AddKitchenForm
+from .session import KitchenSession
+from .authenticate import login_required, authenticate_user, seller_required, addToBucket
+import boto3
 
 
 
+class AllKitchenView(ListView):
+   queryset = Kitchen.objects.all()
+   context_object_name='kitchens'
+   template_name='kitchen.html'
 
 
+
+class MenuView(View):
+
+   def get(self, request, kitchen_id):
+      kitchen_session = KitchenSession(request)
+      kitchen = kitchen_session.getKitchenObject(kitchen_id)
+      dishes = Menu.objects.filter(kitchen=kitchen)
+
+      return render(request, 'menu.html', {'dishes': dishes})
+      
 
 
