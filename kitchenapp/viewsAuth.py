@@ -39,7 +39,7 @@ class Login(View):
          username = form.cleaned_data['username']
          password = form.cleaned_data['password']
          if authenticate_user(request, username, password):
-            return HttpResponse('Logged in')
+            return HttpResponseRedirect(reverse('kitchen:index'))
          
       return HttpResponseRedirect(reverse('kitchen:login'))
 

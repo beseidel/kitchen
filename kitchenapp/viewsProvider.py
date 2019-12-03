@@ -34,9 +34,9 @@ class AddKitchen(View):
          provider = User.objects.get(username=userObj[0], password=userObj[1])
          Kitchen.objects.create(kitchen_name=kitchen_name, image_url=image_url, provider=provider)
 
-         return HttpResponse('Added')
+         return HttpResponseRedirect(reverse('kitchen:providerKitchenView')) 
 
-      return HttpResponse('Not Added')
+      return HttpResponseRedirect(reverse('kitchen:addKitchen')) 
 
 
 
@@ -51,7 +51,7 @@ class ProviderKitchenView(View):
       kitchen_session = KitchenSession(request)
       provider = kitchen_session.getUserObject()
       kitchens = Kitchen.objects.filter(provider=provider)
-      return render(request, 'kitchen.html', {"kitchens":kitchens})
+      return render(request, 'kitchen.html', {"kitchens":kitchens, 'provider': True})
 
 
 

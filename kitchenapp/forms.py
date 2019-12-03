@@ -27,7 +27,6 @@ class SignUpForm(forms.ModelForm):
       fields['is_provider'].required = False
 
 
-
 class LoginForm(forms.Form):
    username  = forms.CharField(max_length=100, required = True)
    password = forms.CharField(max_length=32, widget=forms.PasswordInput, required=True)
@@ -53,33 +52,7 @@ class AddDishForm(forms.ModelForm):
       fields['is_vegan'].required=False
 
 
-'''
-class AddKitchenForm(forms.ModelForm):
-   class Meta:
-      model = Kitchen
-      fields =('kitchen_name', )
-   image  = forms.ImageField()
-   
-   def __init__(self, *args, **kwargs):
-      super(AddKitchenForm, self).__init__(*args, **kwargs)
-      self.fields['image'].required = True
-      self.fields['kitchen_name'].required = True
-'''
-
 
 class AddKitchenForm(forms.Form):
    kitchen_name = forms.CharField(max_length=50, required=True)
    image = forms.ImageField(required=True)
-
-
-
-
-
-# @classmethod
-   #  def create(cls):
-   #      book = cls(price=678)
-   #      return book
-   # def setNew(self):
-   #    dish = super(AddDishForm, self).save(commit=False)
-   #    dish.price = 789
-   #    dish.save()
