@@ -8,7 +8,6 @@ def login_required(function):
    def wrapper(*args, **kwargs):
       if args[1].session.get('user'):
          session = args[1].session.get('user')
-         print("===================>  ", session[2])
          return function(*args, **kwargs)
       else:
          return HttpResponse("Please log in.")

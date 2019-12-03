@@ -39,6 +39,8 @@ class AddKitchen(View):
       return HttpResponseRedirect(reverse('kitchen:addKitchen')) 
 
 
+
+#/myKitchens
 class ProviderKitchenView(View):
    @login_required
    @seller_required
@@ -50,12 +52,16 @@ class ProviderKitchenView(View):
 
 
 
-
+#My kitchen
 class AddDish(View):
+   @login_required
+   @seller_required
    def get(self, request, kitchen_id):
       kitchen_session = KitchenSession(request)
-      dishes = Menu.objects.filter(kitchen=kitchen_session.getKitchenObject(kitchen_id))
-      return render(request, 'menu.html', {'form': AddDishForm(), 'dishes':dishes, 'provider': kitchen_session.isProvider() })
+      kitchen = kitchen_session.getKitchenObject(kitchen_id)
+      dishes = Menu.objects.filter(kitchen=kitchen)
+      data = {'form': AddDishForm(), 'dishes':dishes, 'provider': kitchen_session.isProvider(), 'kitchen_name': kitchen.kitchen_name}
+      return render(request, 'menu.html', data)
    
    
    @login_required

@@ -13,20 +13,31 @@ from .session import KitchenSession
 from .authenticate import login_required, authenticate_user, seller_required, addToBucket
 import boto3
 
+from .serializer import DishSerialize
+
 
 
 class AllKitchenView(ListView):
    queryset = Kitchen.objects.all()
    context_object_name='kitchens'
-   template_name='kitchen.html'
-
+   template_name='buyer_kitchen.html'
 
 
 class MenuView(View):
 
    def get(self, request, kitchen_id):
-      dishes = Menu.objects.filter(kitchen=KitchenSession(request).getKitchenObject(kitchen_id))
-      return render(request, 'menu.html', {'dishes': dishes, 'provider': False})
+      kitchen = KitchenSession(request).getKitchenObject(kitchen_id)
+      dishes = Menu.objects.filter(kitchen=kitchen)
+      return render(request, 'buyer_menu.html', {'dishes': dishes, 'provider': False, 'kitchen_name':kitchen.kitchen_name })
       
 
-
+class AddToCart(APIView):
+   @login_required
+   def post(self, request):
+      serializer = DishSerialize(data=request.data)
+      if serializer.is_valid():
+         form = serializer.data
+         dish_id = form['dish_id']
+         print(dish_id)
+         return Response({'status': "OK"})
+      return Response({'status': "error"})

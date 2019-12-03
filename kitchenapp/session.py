@@ -16,7 +16,7 @@ class KitchenSession(object):
       if user == None:
          return False
       return user[2]
-
+   
    def getKitchenObject(self, kitchen_id):
       return Kitchen.objects.get(id=kitchen_id)
 
