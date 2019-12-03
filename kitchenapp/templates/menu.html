@@ -33,36 +33,34 @@
 
       <!-- First Photo Grid-->
       <div class="w3-row-padding w3-padding-16 w3-center" id="food">
-            <form method="post" novalidate enctype="multipart/form-data">
+            <form style="border: 2px solid rgb(124, 202, 241);" method="post" novalidate enctype="multipart/form-data">
                {% csrf_token %}
-               <table stlye="border: 3px solid black;">
+               <table >
                   {{ form.as_table  }}
                </table >
-               <input type="submit" value='Add Dish'></input>
+               <input type="submit" value='Add To Menu'></input>
+               <p></p>
          </form>
         
         <div class="w3-quarter"  >
-            {% for dish in dishes %} 
-            <span>{{ dish.dish_name }}</span>
-            <span>${{ dish.price }}</span>
-            <span>Vegan: {{ dish.is_vegan }}</span>
-            <p></p>
-            {%endfor %}
+            
         </div>
-
+        <p></p>
 
         <table style="width:100%">
             <tr>
               <th>Dish</th>
               <th>Price</th>
               <th>Vegan</th>
+              <th>Add to cart</th>
             </tr>
             {% for dish in dishes %} 
-            <tr>
-              <td>Jill</td>
-              <td>Smith</td>
-              <td>50</td>
-            </tr>
+               <tr>
+               <td>{{ dish.dish_name }}</td>
+               <td>${{ dish.price }}</td>
+               <td>{{ dish.is_vegan }}</td>
+               <td> <button id='{{ dish.id }}'> Add To Cart</button>               </td>
+               </tr>
             {%endfor %}
             
           </table>
