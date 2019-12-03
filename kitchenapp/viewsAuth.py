@@ -45,11 +45,10 @@ class Login(View):
 
 class Logout(View):
    
-   @login_required
    def get(self, request):
       kitchen_session = KitchenSession(request)
       kitchen_session.removeAll()   
-      return HttpResponseRedirect(reverse('kitchen:login')) 
+      return HttpResponseRedirect(reverse('kitchen:index')) 
 
 
 

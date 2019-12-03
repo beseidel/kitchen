@@ -17,11 +17,14 @@ from .serializer import DishSerialize
 
 
 
-class AllKitchenView(ListView):
-   queryset = Kitchen.objects.all()
-   context_object_name='kitchens'
-   template_name='buyer_kitchen.html'
-
+class AllKitchenView(View):
+   
+   def get(self, request):
+      kitchens = Kitchen.objects.all()
+      kitchen_session = KitchenSession(request)
+      user = kitchen_session.is_login()
+      provider = kitchen_session.isProvider()
+      return render(request, 'buyer_kitchen.html', {'kitchens':kitchens, 'login': user[0], 'username':user[1], 'provider': provider  })
 
 class CartView(ListView):
    
@@ -29,16 +32,20 @@ class CartView(ListView):
    def get(self, request):
       kitchen_session = KitchenSession(request)
       cart = Cart.objects.filter(user=KitchenSession(request).getUserObject() )
-      return render(request, 'cart.html', {'cart':cart})
+      user = kitchen_session.is_login()
+      return render(request, 'cart.html', {'cart':cart, 'login':user[0], 'username': user[1]  })
       
 
 
 class MenuView(View):
 
    def get(self, request, kitchen_id):
-      kitchen = KitchenSession(request).getKitchenObject(kitchen_id)
+      kitchen_session = KitchenSession(request)
+      kitchen = kitchen_session.getKitchenObject(kitchen_id)
       dishes = Menu.objects.filter(kitchen=kitchen)
-      return render(request, 'buyer_menu.html', {'dishes': dishes, 'provider': False, 'kitchen_name':kitchen.kitchen_name })
+      
+      user = kitchen_session.is_login()
+      return render(request, 'buyer_menu.html', {'dishes': dishes, 'kitchen_name':kitchen.kitchen_name, 'login': user[0], 'username':user[1] })
       
 
 class AddToCart(APIView):

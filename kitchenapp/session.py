@@ -17,6 +17,11 @@ class KitchenSession(object):
          return False
       return user[2]
    
+   def is_login(self):
+      user = self.session.get('user')
+      if user :
+         return (True, user[0])
+      return (False, None)
    def getKitchenObject(self, kitchen_id):
       return Kitchen.objects.get(id=kitchen_id)
 
