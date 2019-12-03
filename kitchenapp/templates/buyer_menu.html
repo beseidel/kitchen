@@ -33,14 +33,39 @@
 
       <!-- First Photo Grid-->
       <div class="w3-row-padding w3-padding-16 w3-center" id="food">
-        {% for kitchen in kitchens %}
-        <div class="w3-quarter" id='{{kitchen.id}}' >
-          <h3>{{ kitchen.kitchen_name }}</h3>
-          <img src='{{kitchen.image_url}}' alt="Sandwich" style="width:100%">
-          <h6>Owned by {{kitchen.provider.username }}</h6>
-          <p></p>
+            <form style="border: 2px solid rgb(124, 202, 241);" method="post" novalidate enctype="multipart/form-data">
+               {% csrf_token %}
+               <table >
+                  {{ form.as_table  }}
+               </table >
+               <input type="submit" value='Add To Menu'></input>
+               <p></p>
+         </form>
+        
+        <div class="w3-quarter"  >
+            
         </div>
-        {%endfor %}
+        <p></p>
+
+        <table style="width:100%">
+            <tr>
+              <th>Dish</th>
+              <th>Price</th>
+              <th>Vegan</th>
+              <th>Add to cart</th>
+            </tr>
+            {% for dish in dishes %} 
+               <tr>
+               <td>{{ dish.dish_name }}</td>
+               <td>${{ dish.price }}</td>
+               <td>{{ dish.is_vegan }}</td>
+               <td> <button id='{{ dish.id }}'> Add To Cart</button>               </td>
+               </tr>
+            {%endfor %}
+            
+          </table>
+
+        
       </div>
       
     
@@ -60,23 +85,6 @@
       document.getElementById("mySidebar").style.display = "none";
     }
 
-    $(document).ready(function(){
-        $(document).on( 'click', '.w3-quarter', function() {
-          id = $(this).attr("id")
-          console.log("id is " + id)
-
-          
-          window.location=' {% if provider == True %}  \
-                              {% url "kitchen:addDish" kitchen_id=12345 %}     \
-                            {% else %}   \
-                              {% url "kitchen:addDish" kitchen_id=12345 %} \
-                            {% endif %}  '.replace(/12345/, id.toString()) ;
-          
-
-
-        })
-
-    })
 
   </script>
 

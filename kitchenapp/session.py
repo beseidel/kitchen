@@ -11,6 +11,12 @@ class KitchenSession(object):
       user = self.session.get('user')
       return User.objects.get(username=user[0], password=user[1])
 
+   def isProvider(self):
+      user = self.session.get('user')
+      if user == None:
+         return False
+      return user[2]
+
    def getKitchenObject(self, kitchen_id):
       return Kitchen.objects.get(id=kitchen_id)
 

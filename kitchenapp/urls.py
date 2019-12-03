@@ -21,7 +21,7 @@ urlpatterns = [
     
     
     # Buyer Path
-    # path('buyer/', Index.as_view()),    # Subject to change 
+    url(r'^view/menu/kitchen(?P<kitchen_id>.*)/$', AddDish.as_view(), name='viewMenu'), # Subject to change 
 
 
 ]

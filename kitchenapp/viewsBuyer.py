@@ -25,11 +25,8 @@ class AllKitchenView(ListView):
 class MenuView(View):
 
    def get(self, request, kitchen_id):
-      kitchen_session = KitchenSession(request)
-      kitchen = kitchen_session.getKitchenObject(kitchen_id)
-      dishes = Menu.objects.filter(kitchen=kitchen)
-
-      return render(request, 'menu.html', {'dishes': dishes})
+      dishes = Menu.objects.filter(kitchen=KitchenSession(request).getKitchenObject(kitchen_id))
+      return render(request, 'menu.html', {'dishes': dishes, 'provider': False})
       
 
 

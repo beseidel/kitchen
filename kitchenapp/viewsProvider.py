@@ -40,8 +40,6 @@ class AddKitchen(View):
 
 
 class ProviderKitchenView(View):
-   
-   
    @login_required
    @seller_required
    def get(self, request):
@@ -54,17 +52,17 @@ class ProviderKitchenView(View):
 
 
 class AddDish(View):
-
-   
    def get(self, request, kitchen_id):
-      dishes = Menu.objects.filter(kitchen=KitchenSession(request).getKitchenObject(kitchen_id))
-      
-      return render(request, 'menu.html', {'form': AddDishForm(), 'dishes':dishes })
-
+      kitchen_session = KitchenSession(request)
+      dishes = Menu.objects.filter(kitchen=kitchen_session.getKitchenObject(kitchen_id))
+      return render(request, 'menu.html', {'form': AddDishForm(), 'dishes':dishes, 'provider': kitchen_session.isProvider() })
+   
+   
+   @login_required
+   @seller_required
    def post(self, request, kitchen_id):
       form = AddDishForm(request.POST)
       if form.is_valid():
-         print('===================================+')
          dish_name, price, is_vegan = form.cleaned_data['dish_name'], form.cleaned_data['price'], form.cleaned_data['is_vegan']
          Menu.objects.create(dish_name=dish_name,price=price, is_vegan=is_vegan, kitchen=KitchenSession(request).getKitchenObject(kitchen_id) )
          
