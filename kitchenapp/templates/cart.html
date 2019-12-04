@@ -177,6 +177,13 @@ $(document).ready(function(){
           })
 
         })
+
+        $(document).on( 'click', '.button', function() {
+          id = $(this).attr("id")
+          window.location=   '{% url "kitchen:removeDish" cart_id=12345 %}'.replace(/12345/, id.toString()) ;
+        })
+
+
     })
 
 </script>

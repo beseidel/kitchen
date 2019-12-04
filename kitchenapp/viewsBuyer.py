@@ -84,3 +84,12 @@ class PurchasedOrder(View):
       cart = order.purchased_list.all()
       user = kitchen_session.is_login()
       return render(request, 'cart.html', {'in_cart':False, 'price' : order.price, 'order_id' : order_id, 'name':'Order #' , 'login': user[0], 'username':user[1],'provider': kitchen_session.isProvider(), 'purchased': True,'cart':cart })
+
+
+class RemoveDish(View):
+   @login_required
+   def get(self, request, cart_id):
+      user = KitchenSession(request).getUserObject()
+      Cart.objects.get(user=user, id=cart_id).delete()
+      return HttpResponseRedirect(reverse('kitchen:shoppingCart'))
+

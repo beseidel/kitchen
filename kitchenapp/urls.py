@@ -3,7 +3,7 @@ from django.conf.urls import url
 
 from .viewsAuth import Signup, Login, Logout
 from .viewsProvider import AddKitchen, ProviderKitchenView, AddDish
-from .viewsBuyer import AllKitchenView, MenuView, AddToCart, CartView, Purchase, OrderView, PurchasedOrder
+from .viewsBuyer import AllKitchenView, MenuView, AddToCart, CartView, Purchase, OrderView, PurchasedOrder, RemoveDish
 
 app_name='kitchen'
 
@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^purchase/$', Purchase.as_view(), name='purchase'), # Subject to change 
     url(r'^orders/$', OrderView.as_view(), name='orders'), # Subject to change 
     url(r'^purchasedOrder/(?P<order_id>.*)$', PurchasedOrder.as_view(), name='purchasedOrder'), # Subject to change 
+    url(r'^removeDish/(?P<cart_id>.*)$', RemoveDish.as_view(), name='removeDish'), # Subject to change 
 ]
 
 
