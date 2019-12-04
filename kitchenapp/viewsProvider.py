@@ -48,7 +48,8 @@ class ProviderKitchenView(View):
       kitchen_session = KitchenSession(request)
       provider = kitchen_session.getUserObject()
       kitchens = Kitchen.objects.filter(provider=provider)
-      return render(request, 'kitchen.html', {"kitchens":kitchens, 'provider': True})
+      user = kitchen_session.is_login()
+      return render(request, 'kitchen.html', {"kitchens":kitchens, 'provider': True, 'login': user[0], 'username':user[1]})
 
 
 
@@ -60,7 +61,10 @@ class AddDish(View):
       kitchen_session = KitchenSession(request)
       kitchen = kitchen_session.getKitchenObject(kitchen_id)
       dishes = Menu.objects.filter(kitchen=kitchen)
-      data = {'form': AddDishForm(), 'dishes':dishes, 'provider': kitchen_session.isProvider(), 'kitchen_name': kitchen.kitchen_name}
+
+      user = kitchen_session.is_login()
+
+      data = {'form': AddDishForm(), 'dishes':dishes, 'provider': kitchen_session.isProvider(), 'kitchen_name': kitchen.kitchen_name, 'login': user[0], 'username':user[1]}
       return render(request, 'menu.html', data)
    
    
