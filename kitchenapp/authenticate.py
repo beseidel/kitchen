@@ -2,7 +2,9 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from .models import User, Kitchen
 from django.urls import reverse
+
 import boto3
+
 
 def login_required(function):
    def wrapper(*args, **kwargs):
@@ -10,7 +12,7 @@ def login_required(function):
          session = args[1].session.get('user')
          return function(*args, **kwargs)
       else:
-         return HttpResponse("Please log in.")
+         return HttpResponseRedirect(reverse('kitchen:login'))
    return wrapper
 
 
