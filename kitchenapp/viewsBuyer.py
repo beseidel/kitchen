@@ -31,7 +31,7 @@ class CartView(ListView):
       kitchen_session = KitchenSession(request)
       cart = Cart.objects.filter(user=KitchenSession(request).getUserObject(), purchased=False )
       user = kitchen_session.is_login()
-      return render(request, 'cart.html', {'cart':cart, 'login':user[0], 'username': user[1], 'provider': kitchen_session.isProvider() , 'total': kitchen_session.getShopingCartTotal() })
+      return render(request, 'cart.html', {'cart':cart, 'login':user[0], 'username': user[1], 'provider': kitchen_session.isProvider() , 'total': kitchen_session.getShopingCartTotal(), 'cart_length': len(cart) })
       
 
 
