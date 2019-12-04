@@ -81,7 +81,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
             </tr>
             {% for order in orders %} 
                <tr>
-               <td class='td'>  {{ order.id }}</td>
+               <td class='td' id='{{ order.id }}' >  {{ order.id }}</td>
                <td>${{ order.price }}</td>
                <!-- <td>{{ item.dish.kitchen.kitchen_name }}</td> -->
                
@@ -89,7 +89,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
             {%endfor %}
             
           </table>
-          <p><h5> <b>  Total: $ {{total}} </b>  </h5> </p>
+          
           <!-- <button class='purchaseButton' id='{{total}}'> Purchase </button> -->
             
           </table>
@@ -153,22 +153,9 @@ function w3_close() {
 }
 
 $(document).ready(function(){
-        $(document).on( 'click', '.purchaseButton', function() {
+        $(document).on( 'click', '.td', function() {
           id = $(this).attr("id")
-          
-          $.ajax({
-            url: '{%  url "kitchen:purchase"   %}',
-            type: 'POST',
-            contentType:"application/json",
-            dataType:"json",
-            data: JSON.stringify({}),
-            success: function (data){
-              window.location=   '{% url "kitchen:orders" %}'
-            },
-            error: function(err){
-              alert("Please log in!")
-            }
-          })
+          window.location=   '{% url "kitchen:purchasedOrder" order_id=12345 %}'.replace(/12345/, id.toString()) ;
 
         })
     })

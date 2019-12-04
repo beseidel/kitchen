@@ -31,7 +31,7 @@ class CartView(ListView):
       kitchen_session = KitchenSession(request)
       cart = Cart.objects.filter(user=KitchenSession(request).getUserObject(), purchased=False )
       user = kitchen_session.is_login()
-      return render(request, 'cart.html', {'cart':cart, 'login':user[0], 'username': user[1], 'provider': kitchen_session.isProvider() , 'total': kitchen_session.getShopingCartTotal(), 'cart_length': len(cart) })
+      return render(request, 'cart.html', {'in_cart': True ,'name': 'Shopping Cart','cart':cart, 'login':user[0], 'username': user[1], 'provider': kitchen_session.isProvider() , 'total': kitchen_session.getShopingCartTotal(), 'cart_length': len(cart) })
       
 
 
@@ -74,3 +74,13 @@ class OrderView(View):
       user = kitchen_session.is_login()
 
       return render(request, 'order.html', {'name':'Order' , 'login': user[0], 'username':user[1],'provider': kitchen_session.isProvider(),'orders': orders })
+
+
+class PurchasedOrder(View):
+   @login_required
+   def get(self, request, order_id):
+      kitchen_session = KitchenSession(request)
+      order = Order.objects.get(id=order_id)
+      cart = order.purchased_list.all()
+      user = kitchen_session.is_login()
+      return render(request, 'cart.html', {'in_cart':False, 'price' : order.price, 'order_id' : order_id, 'name':'Order #' , 'login': user[0], 'username':user[1],'provider': kitchen_session.isProvider(), 'purchased': True,'cart':cart })

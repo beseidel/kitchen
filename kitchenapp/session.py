@@ -6,7 +6,6 @@ class KitchenSession(object):
    def __init__(self, request):
       self.session = request.session
 
-
    def isProvider(self):
       user = self.session.get('user')
       if user == None:
