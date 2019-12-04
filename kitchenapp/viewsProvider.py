@@ -18,8 +18,11 @@ class AddKitchen(View):
    @login_required
    @seller_required
    def get(self, request):
+      kitchen_session = KitchenSession(request)
       form = AddKitchenForm()
-      return render(request, 'forms.html', {'form': form})
+      user = kitchen_session.is_login()
+
+      return render(request, 'forms.html', {'name':'Add Kitchen', 'form': form, 'provider': True, 'login': user[0], 'username':user[1]})
 
 
    @login_required
@@ -64,7 +67,7 @@ class AddDish(View):
 
       user = kitchen_session.is_login()
 
-      data = {'form': AddDishForm(), 'dishes':dishes, 'provider': kitchen_session.isProvider(), 'kitchen_name': kitchen.kitchen_name, 'login': user[0], 'username':user[1]}
+      data = {'name':'Add Dish' , 'form': AddDishForm(), 'dishes':dishes, 'provider': kitchen_session.isProvider(), 'kitchen_name': kitchen.kitchen_name, 'login': user[0], 'username':user[1]}
       return render(request, 'menu.html', data)
    
    

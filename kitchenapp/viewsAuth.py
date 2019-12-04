@@ -16,7 +16,7 @@ import boto3
 class Signup(View):
    def get(self, request):
       form = SignUpForm()
-      return render(request, 'forms.html', {'form':form})
+      return render(request, 'forms.html', {'form':form, 'name':'Sign Up'})
    
    def post(self, request):
       form = SignUpForm(request.POST)
@@ -30,7 +30,7 @@ class Login(View):
 
    def get(self, request):
       form = LoginForm()
-      return render(request, 'forms.html', {'form': form})
+      return render(request, 'forms.html', {'form': form, 'name':'Login'})
 
    def post(self, request):
       form = LoginForm(request.POST)
