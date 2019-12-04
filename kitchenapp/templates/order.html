@@ -72,17 +72,17 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 
         <table style="width:100%">
             <tr>
-              <th>Dish</th>
+              <th>Order ID</th>
               <th>Price</th>
-              <th>From</th>
-              <th></th>
+              <!-- <th>From</th> -->
+              
             </tr>
-            {% for item in cart %} 
+            {% for order in orders %} 
                <tr>
-               <td class='td'>{{ item.dish.dish_name }}</td>
-               <td>${{ item.dish.price }}</td>
-               <td>{{ item.dish.kitchen.kitchen_name }}</td>
-               <td><a id='{{ item.id }}' href='#food' class='button'>Remove</a></td>
+               <td class='td'>{{ order.id }}</td>
+               <td>${{ order.price }}</td>
+               <!-- <td>{{ item.dish.kitchen.kitchen_name }}</td> -->
+               
                </tr>
             {%endfor %}
             

@@ -7,7 +7,7 @@ from django.views import View
 from django.views.generic import ListView, DetailView
 from rest_framework.views import APIView
 # models
-from .models import User, Kitchen, WorkingDay, Menu, Cart
+from .models import User, Kitchen, WorkingDay, Menu, Cart, Order
 from .forms import SignUpForm, LoginForm, AddDishForm, AddKitchenForm
 from .session import KitchenSession
 from .authenticate import login_required, authenticate_user, seller_required, addToBucket
@@ -29,9 +29,9 @@ class CartView(ListView):
    @login_required
    def get(self, request):
       kitchen_session = KitchenSession(request)
-      cart = Cart.objects.filter(user=KitchenSession(request).getUserObject() )
+      cart = Cart.objects.filter(user=KitchenSession(request).getUserObject(), purchased=False )
       user = kitchen_session.is_login()
-      return render(request, 'cart.html', {'cart':cart, 'login':user[0], 'username': user[1], 'provider': kitchen_session.isProvider()  })
+      return render(request, 'cart.html', {'cart':cart, 'login':user[0], 'username': user[1], 'provider': kitchen_session.isProvider() , 'total': kitchen_session.getShopingCartTotal() })
       
 
 
@@ -59,3 +59,18 @@ class AddToCart(APIView):
          return Response({'status': "OK"})
          
       return Response({'status': "error"})
+
+class Purchase(APIView):
+   @login_required
+   def post(self, request):
+      KitchenSession(request).processTransaction()
+      return Response({'status': "OK"})
+
+
+class OrderView(View):
+   def get(self, request):
+      kitchen_session = KitchenSession(request)
+      orders = Order.objects.filter(user=kitchen_session.getUserObject())
+      user = kitchen_session.is_login()
+
+      return render(request, 'order.html', {'name':'Order' , 'login': user[0], 'username':user[1],'provider': kitchen_session.isProvider(),'orders': orders })
