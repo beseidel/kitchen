@@ -39,7 +39,8 @@ then
       sudo rm /etc/apache2/sites-enabled/000-default.conf
    fi
    sudo cp ~/kitchen/apache.conf /etc/apache2/sites-enabled/
-   sudo service apache2 restarty
+   sudo service apache2 restart
+   
 
 
 fi
