@@ -1,4 +1,4 @@
-
+# git clone --single-branch --branch kevin https://github.com/beseidel/kitchen
 
 source ~/kitchen/env/bin/activate
 echo "To fix Django error, type 1 "  
@@ -25,5 +25,11 @@ else
    sudo ufw allow 'OpenSSH'
    sudo apt-get install curl
    curl -4 icanhazip.com
+
+   if [-e /etc/apache2/sites-enabled/000-default.conf ]
+   then 
+      sudo rm /etc/apache2/sites-enabled/000-default.conf
+      sudo cp ~/kitchen/apache.conf /etc/apache2/sites-enabled/
+      sudo service apache2 restart
 fi
 
