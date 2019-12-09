@@ -12,6 +12,9 @@ if [ $error == 1 ]
 then
    ~/kitchen/env/bin/pip3 install -r install.txt
 elif [ $error == 2 ]
+   sudo pip3 install virtualenv 
+   virtualenv  ~/kitchen/env
+   ~/kitchen/env/bin/pip3 install -r install.txt
 then 
    sudo apt-get update
    sudo apt-get install python3-dev build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev python3-pip -y
