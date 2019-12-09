@@ -6,13 +6,17 @@ read error
 
 if [ $error == 1 ] 
 then
+   echo "alias pip=pip3" >> ~/.bashrc
+   source ~/.bashrc
    pip install -r install.txt
 elif [ $error == 2 ]
 then 
    sudo apt-get update
    sudo apt-get install python3-dev build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev python3-pip -y
    sudo apt-get install libmysqlclient-dev -y
+   pip install -r install.txt
 else
    echo "Exiting now ..."
    sleep 2
 fi
+
