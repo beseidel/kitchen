@@ -25,12 +25,14 @@ else
    sudo ufw allow 'OpenSSH'
    sudo apt-get install curl
    curl -4 icanhazip.com
-
-   if [-e /etc/apache2/sites-enabled/000-default.conf ]
+   file=/etc/apache2/sites-enabled/000-default.conf
+   if [ -e $file ]
    then 
       sudo rm /etc/apache2/sites-enabled/000-default.conf
+   else
       sudo cp ~/kitchen/apache.conf /etc/apache2/sites-enabled/
       sudo service apache2 restart
    fi
+
 fi
 
