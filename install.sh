@@ -1,22 +1,27 @@
 # git clone --single-branch --branch kevin https://github.com/beseidel/kitchen
 
-echo "To install everything type 2" 
-
+echo "To install sql type 2" 
+echo "To install everything else type 3" 
 echo -e "Option: \c"
 read error
 
 
 if [ $error == 2 ]
 then 
+   sudo apt-get update
+   sudo apt-get install python3-dev build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev python3-pip -y
+   sudo apt-get install libmysqlclient-dev -y
+   
+elif [ $error == 3]
+then   
+   sudo apt-get update
    sudo pip3 install virtualenv 
    virtualenv ~/kitchen/env
    source ~/kitchen/env/bin/activate
    ~/kitchen/env/bin/pip3 install -r install.txt
    ~/kitchen/env/bin/pip3 install django-paypal
 
-   sudo apt-get update
-   sudo apt-get install python3-dev build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev python3-pip -y
-   sudo apt-get install libmysqlclient-dev -y
+   
    ~/kitchen/env/bin/pip3 install -r install.txt
    sudo apt-get update
    sudo ufw enable
