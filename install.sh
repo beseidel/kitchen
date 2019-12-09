@@ -7,12 +7,13 @@ read error
 
 
 if [ $error == 2 ]
+then 
    sudo pip3 install virtualenv 
    virtualenv ~/kitchen/env
    source ~/kitchen/env/bin/activate
    ~/kitchen/env/bin/pip3 install -r install.txt
    ~/kitchen/env/bin/pip3 install django-paypal
-then 
+
    sudo apt-get update
    sudo apt-get install python3-dev build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev python3-pip -y
    sudo apt-get install libmysqlclient-dev -y
