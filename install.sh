@@ -1,7 +1,7 @@
 # git clone --single-branch --branch kevin https://github.com/beseidel/kitchen
 
 echo "To install everything type 2" 
-echo "To deploy Django on Apache type 3" 
+
 echo -e "Option: \c"
 read error
 
