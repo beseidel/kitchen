@@ -1,6 +1,5 @@
 # git clone --single-branch --branch kevin https://github.com/beseidel/kitchen
 
-source ~/kitchen/env/bin/activate
 echo "To install everything type 2" 
 echo "To deploy Django on Apache type 3" 
 echo -e "Option: \c"
@@ -10,6 +9,7 @@ read error
 if [ $error == 2 ]
    sudo pip3 install virtualenv 
    virtualenv ~/kitchen/env
+   source ~/kitchen/env/bin/activate
    ~/kitchen/env/bin/pip3 install -r install.txt
    ~/kitchen/env/bin/pip3 install django-paypal
 then 
