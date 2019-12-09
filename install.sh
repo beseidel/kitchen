@@ -29,10 +29,9 @@ else
    if [ -e $file ]
    then 
       sudo rm /etc/apache2/sites-enabled/000-default.conf
-   else
-      sudo cp ~/kitchen/apache.conf /etc/apache2/sites-enabled/
-      sudo service apache2 restart
    fi
+   sudo cp ~/kitchen/apache.conf /etc/apache2/sites-enabled/
+   sudo service apache2 restart
 
 fi
 
