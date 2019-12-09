@@ -19,7 +19,7 @@ then
    sudo apt-get update
    sudo apt-get install python3-dev build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev python3-pip -y
    sudo apt-get install libmysqlclient-dev -y
-   pip install -r install.txt
+   ~/kitchen/env/bin/pip3 install -r install.txt
 else 
    sudo apt-get update
    sudo apt-get install apache2 libapache2-mod-wsgi-py3 -y
