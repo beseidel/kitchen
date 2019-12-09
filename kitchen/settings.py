@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'kitchenapp'
+    'kitchenapp',
+    'paypal.standard.ipn', 
 ]
 
 MIDDLEWARE = [
@@ -154,3 +155,8 @@ AWS_S3_OBJECT_PARAMETERS = {
     'CacheControl': 'max-age=86400',
 }
 AWS_LOCATION = 'static'
+
+
+
+PAYPAL_RECEIVER_EMAIL = 'sb-yyg3q692047@personal.example.com'
+PAYPAL_TEST = True

@@ -22,6 +22,7 @@ class AllKitchenView(View):
       kitchens = Kitchen.objects.all()
       kitchen_session = KitchenSession(request)
       user = kitchen_session.is_login()
+      
       return render(request, 'buyer_kitchen.html', {'kitchens':kitchens, 'login': user[0], 'username':user[1], 'provider': kitchen_session.isProvider()  })
 
 class CartView(ListView):
