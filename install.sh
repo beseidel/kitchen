@@ -1,19 +1,15 @@
 # git clone --single-branch --branch kevin https://github.com/beseidel/kitchen
 
 source ~/kitchen/env/bin/activate
-echo "To fix Django error, type 1 "  
 echo "To install everything type 2" 
 echo "To deploy Django on Apache type 3" 
 echo -e "Option: \c"
 read error
 
 
-if [ $error == 1 ] 
-then
-   ~/kitchen/env/bin/pip3 install -r install.txt
-elif [ $error == 2 ]
+if [ $error == 2 ]
    sudo pip3 install virtualenv 
-   virtualenv  ~/kitchen/env
+   virtualenv ~/kitchen/env
    ~/kitchen/env/bin/pip3 install -r install.txt
    ~/kitchen/env/bin/pip3 install django-paypal
 then 
@@ -27,6 +23,8 @@ else
    sudo ufw allow 'Apache Full'
    sudo systemctl status apache2
    sudo ufw allow 'OpenSSH'
+   sudo ufw allow '3000'
+   sudo ufw allow '80'
    sudo apt-get install curl
    curl -4 icanhazip.com
    file=/etc/apache2/sites-enabled/000-default.conf
