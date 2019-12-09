@@ -13,6 +13,7 @@ from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'kitchen.settings')
 
+import sys
 try:
    application = get_wsgi_application()
 except Exception:
