@@ -11,7 +11,7 @@ then
    sudo apt-get update
    sudo apt-get install python3-dev build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev python3-pip -y
    sudo apt-get install libmysqlclient-dev -y
-   
+   sudo ufw enable
 elif [ $error == 3 ]
 then   
    sudo apt-get update
@@ -24,7 +24,7 @@ then
    
    ~/kitchen/env/bin/pip3 install -r install.txt
    sudo apt-get update
-   sudo ufw enable
+   
    sudo apt-get install apache2 libapache2-mod-wsgi-py3 -y
    sudo ufw allow 'Apache Full'
    sudo systemctl status apache2
@@ -39,7 +39,8 @@ then
       sudo rm /etc/apache2/sites-enabled/000-default.conf
    fi
    sudo cp ~/kitchen/apache.conf /etc/apache2/sites-enabled/
-   sudo service apache2 restart
+   sudo service apache2 restarty
+
 
 fi
 
