@@ -19,6 +19,7 @@ then
    ~/kitchen/env/bin/pip3 install -r install.txt
 else 
    sudo apt-get update
+   sudo ufw enable
    sudo apt-get install apache2 libapache2-mod-wsgi-py3 -y
    sudo ufw allow 'Apache Full'
    sudo systemctl status apache2
