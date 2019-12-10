@@ -1,4 +1,4 @@
-# git clone --single-branch --branch kevin https://github.com/beseidel/kitchen
+# git clone --single-branch --branch kevin https://github.com/beseidel/kitchen; cd ~/kitchen; source install.sh
 
 echo "To install requried packages in new instance, type 2" 
 echo "To deploy and run full application, type 3" 
