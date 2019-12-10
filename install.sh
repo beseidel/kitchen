@@ -1,7 +1,6 @@
 # git clone --single-branch --branch kevin https://github.com/beseidel/kitchen
 
-echo "To install sql type 2" 
-echo "To install everything else type 3" 
+echo "To install application, type 2" 
 echo -e "Option: \c"
 read error
 
@@ -11,9 +10,8 @@ then
    sudo apt-get update
    sudo apt-get install python3-dev build-essential libssl-dev libffi-dev libxml2-dev libxslt1-dev zlib1g-dev python3-pip -y
    sudo apt-get install libmysqlclient-dev -y
-   sudo ufw enable
-elif [ $error == 3 ]
-then   
+   echo "y" | sudo ufw enable
+
    sudo apt-get update
    sudo pip3 install virtualenv 
    virtualenv ~/kitchen/env
