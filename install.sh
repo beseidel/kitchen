@@ -27,7 +27,6 @@ then
    
    sudo apt-get install apache2 libapache2-mod-wsgi-py3 -y
    sudo ufw allow 'Apache Full'
-   sudo systemctl status apache2
    sudo ufw allow 'OpenSSH'
    sudo ufw allow '3000'
    sudo ufw allow '80'
